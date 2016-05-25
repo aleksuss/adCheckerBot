@@ -8,6 +8,8 @@
 #include <Poco/JSON/Parser.h>
 #include <Poco/Net/HTTPServer.h>
 
+constexpr std::string TOKEN = "";
+
 Service::Service() : ServerApplication() { }
 
 int Service::main(const std::vector<std::string>& args) {
@@ -26,14 +28,9 @@ int Service::main(const std::vector<std::string>& args) {
 
         Poco::Net::HTTPServer server(handlerFactory, 9090, params);
 
-        HttpClient sslClient("https://api.telegram.org/bot214145848:AAEBJc_AFY43kYIZeGHHhzl37KiD-wF8G28", true);
+        HttpClient sslClient("https://api.telegram.org/bot" + TOKEN, true);
         std::string method = "/sendMessage?chat_id=444086&text=Hello From C";
         auto result = sslClient.makeGetRequest(method);
-        prettyPrint(result);
-
-        HttpClient client("http://a1.allroll.biz:8888");
-        method = "/debug";
-        result = client.makeGetRequest(method);
         prettyPrint(result);
 
         server.start();
